@@ -7,6 +7,8 @@ public class gameController : MonoBehaviour {
 	public Vector3 SpawnValues;
 	public int hazardCount;
 
+	public GameObject player1;
+
 	private Boundary boundary;
 	//private Vector3 pos = new Vector3(150.0f, 0.0f, 0.0f); 
 
@@ -53,6 +55,7 @@ public class gameController : MonoBehaviour {
 		UpdateScore ();
 		UpdateLife ();
 		StartCoroutine ("SpawnWaves");
+		Instantiate (player1, player1.transform.position, player1.transform.rotation);
 
 		/*if (stopped == false)
 		{
@@ -60,26 +63,19 @@ public class gameController : MonoBehaviour {
 		}*/
 
 	}
-	
+
+	/*IEnumerator SpawnPlayer()
+	{
+
+	}*/
+
 	IEnumerator SpawnWaves()
 	{
-		if(camera.transform.position.x >= 140)
-		{
-			stopped = true;
-		}
-
-		if(stopped)
-		{
-			yield break;
-		}
-
 		yield return new WaitForSeconds(startWait);
 		while (!gameOver) 
 		{
-
 			for (int i = 0; i < hazardCount; i++) 
 			{
-
 				Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
 				viewPos.x = Mathf.Clamp01(viewPos.x);
 				viewPos.y = Mathf.Clamp01(viewPos.y);
@@ -89,21 +85,10 @@ public class gameController : MonoBehaviour {
 				Quaternion SpawnRotation = Quaternion.identity;
 				Instantiate (Hazard, SpawnPosition, SpawnRotation);
 
-				if(stopped)
-				{
-					yield break;
-				}
-
 				yield return new WaitForSeconds (spawnWait);
 			}
 
-			if(stopped)
-			{
-				yield break;
-			}
-
 			yield return new WaitForSeconds(waveWait);
-
 
 			if (gameOver)
 			{
