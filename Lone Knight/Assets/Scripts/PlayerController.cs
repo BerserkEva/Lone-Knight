@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour {
 	public float fireRate;
 	
 	private float nextFire;
+	private int counter = 0;
 	
 	void Update()
 	{
@@ -71,5 +72,32 @@ public class PlayerController : MonoBehaviour {
 		
 		//rigidbody.rotation = Quaternion.Euler(0.0f, rigidbody.velocity.y, 0.0f) - tilt;
 	}
+
+	/*void OnCollisionEnter(Collision other)
+	{
+
+
+		if (other.gameObject.tag == "Enemy") 
+		{
+			DestroyByContact.Destroy(other.gameObject);
+		}
+		if (other.gameObject.tag == "Finish")
+		{
+			if(other.gameObject.renderer.isVisible)
+			{
+				counter += 1;
+				checkHit ();
+			}
+		}
+		
+	}
+
+	void checkHit()
+	{
+		if (counter == 5)
+		{
+			Destroy(gameObject);
+		}
+	}*/
 	
 }

@@ -19,14 +19,17 @@ public class gameController : MonoBehaviour {
 	public GUIText gameOverText;
 	public GUIText lifeText;
 
-	private bool gameOver;
+	public bool gameOver;
 	private bool stopped;
 	private bool restart;
 
 	private int score;
 	private int lives;
+	private int timeElapsed;
+	private float pos;
 
 	public Camera camera;
+	public GameObject player;
 
 	void UpdateScore()
 	{
@@ -47,7 +50,8 @@ public class gameController : MonoBehaviour {
 		gameOverText.text = "";
 		restartText.text = "";
 		lives = 3;
-
+		//timeElapsed = 0;
+		//pos = camera.transform.position.x;
 
 
 		UpdateScore ();
@@ -63,7 +67,7 @@ public class gameController : MonoBehaviour {
 	
 	IEnumerator SpawnWaves()
 	{
-		if(camera.transform.position.x >= 140)
+		/*if(camera.transform.position.x >= 140)
 		{
 			stopped = true;
 		}
@@ -71,7 +75,7 @@ public class gameController : MonoBehaviour {
 		if(stopped)
 		{
 			yield break;
-		}
+		}*/
 
 		yield return new WaitForSeconds(startWait);
 		while (!gameOver) 
@@ -135,6 +139,7 @@ public class gameController : MonoBehaviour {
 
 	void Update()
 	{
+		timeElapsed++;
 		if (restart)
 		{
 			if(Input.GetKeyDown(KeyCode.R))
@@ -147,6 +152,7 @@ public class gameController : MonoBehaviour {
 		{
 			StopCoroutine ("SpawnWaves");
 		}
+
 
 	}
 
