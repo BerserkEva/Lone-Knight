@@ -20,10 +20,22 @@ public class PlayerController : MonoBehaviour {
 	public GameObject shot;
 	public Transform shotSpawn;
 	public float fireRate;
-	
+	private Transform savedTransform;
+	private float dragSpeed = 0.1f;
+	[SerializeField]
+	float _vert = 2.5f, _hor = 2.5f;
+	Vector2 startPos;
+
 	private float nextFire;
 	private int counter = 0;
-	
+
+	void Start()
+
+	{
+		savedTransform = transform;
+		startPos = savedTransform.position;
+	}
+
 	void Update()
 	{
 		Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
@@ -31,15 +43,54 @@ public class PlayerController : MonoBehaviour {
 		viewPos.y = Mathf.Clamp01(viewPos.y);
 		transform.position = Camera.main.ViewportToWorldPoint(viewPos);
 
-		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
-			nextFire = Time.time + fireRate;
-			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-		} 
-		
-		if (shot.rigidbody.position.x > boundary.xmax) {
-			Destroy (shot);
+		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
+		{					//Touch touch = Input.GetTouch(0);
+			Vector2 deltaPosition = Input.GetTouch(0).deltaPosition;
+			Vector2 moved = new Vector2(deltaPosition.x, deltaPosition.y);
+
+			transform.position = Camera.main.ScreenToWorldPoint(moved);
+
+			/*switch(Input.GetTouch(0).phase)
+			{
+			case TouchPhase.Began:
+				break;
+
+			case TouchPhase.Moved:
+				DragObject(deltaPosition);
+				break;
+
+			case TouchPhase.Ended:
+				break;
+			}*/
 		}
+
+			/*if(touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+			{
+				Vector2 TouchPo1sition = Camera.main.ScreenToWorldPoint(new Vector2(touch.position.x, touch.position.y));
+				transform.position = Vector2.Lerp (transform.position, TouchPosition, 2.0f);
+			}*/
+
+			if (Input.GetButton ("Fire1") && Time.time > nextFire) 
+			{
+				nextFire = Time.time + fireRate;
+				Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
+			} 
+		
+			if (shot.rigidbody.position.x > boundary.xmax) 
+			{
+				Destroy (shot);
+			}
 	}
+
+	/*void DragObject(Vector2 deltaPosition)
+	{
+		savedTransform.position = new Vector2 (Mathf.Clamp((deltaPosition.x * dragSpeed) + savedTransform.position.x, 
+		                                                   startPos.x - _hor, startPos.y - _hor),
+		                                       Mathf.Clamp((deltaPosition.y * dragSpeed) + savedTransform.position.y, 
+		            										startPos.y - _vert, startPos.x - _vert));
+
+	}*/
+
 	//input
 	void FixedUpdate ()
 	{
