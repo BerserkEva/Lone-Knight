@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour {
 	public float fireRate;
 	
 	private float nextFire;
-	private int counter = 0;
 	
 	void Update()
 	{

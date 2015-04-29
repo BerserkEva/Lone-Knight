@@ -58,7 +58,7 @@ public class EndLevel : MonoBehaviour {
 		}
 	}*/
 
-	void OnCollisionEnter(Collision other)
+	void OnTriggerEnter(Collider other)
 	{
 		//if (other.gameObject.name == "Finish") 
 		//{
@@ -77,6 +77,7 @@ public class EndLevel : MonoBehaviour {
 		if (counter == 5)
 		{
 			Destroy(gameObject);
+			Application.LoadLevel("title screen");
 		}
 	}
 }

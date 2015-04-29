@@ -19,9 +19,10 @@ public class gameController : MonoBehaviour {
 	public GUIText gameOverText;
 	public GUIText lifeText;
 
-	public bool gameOver;
+	private bool gameOver;
 	private bool stopped;
 	private bool restart;
+	private bool pause;
 
 	private int score;
 	private int lives;
@@ -47,6 +48,7 @@ public class gameController : MonoBehaviour {
 		gameOver = false;
 		restart = false;
 		stopped = false;
+		pause = false;
 		gameOverText.text = "";
 		restartText.text = "";
 		lives = 3;
@@ -78,7 +80,7 @@ public class gameController : MonoBehaviour {
 		}*/
 
 		yield return new WaitForSeconds(startWait);
-		while (!gameOver) 
+		while (!gameOver && !pause) 
 		{
 
 			for (int i = 0; i < hazardCount; i++) 
@@ -137,6 +139,8 @@ public class gameController : MonoBehaviour {
 		gameOver = true;
 	}
 
+
+
 	void Update()
 	{
 		timeElapsed++;
@@ -146,6 +150,31 @@ public class gameController : MonoBehaviour {
 			{
 				Application.LoadLevel(Application.loadedLevel);
 			}
+		}
+
+		if (!pause)
+		{
+			Time.timeScale = 1.0f;
+		} 
+		else 
+		{
+			Time.timeScale = 0.0f;
+		}
+
+
+
+		if(Input.GetKeyDown(KeyCode.P))
+	    {
+			if(pause == true)
+			{
+				pause = false;
+			}
+
+			else
+			{
+				pause = true;
+			}
+
 		}
 
 		if (camera.transform.position.x >= 140)
