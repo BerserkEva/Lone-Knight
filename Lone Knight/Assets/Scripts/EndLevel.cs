@@ -5,71 +5,24 @@ public class EndLevel : MonoBehaviour {
 
 	//private gameController GameController;
 	private int counter = 0;
-	//bool visible = renderer.isVisible;
-	/*void Start()
-	{
-		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
-		if (gameControllerObject != null)
-		{
-			GameController = gameControllerObject.GetComponent<gameController>();
-		}
-		
-		if (gameControllerObject == null)
-		{
-			Debug.Log("Can't find game controller Script.");
-		}
-	}*/
+	private float speed = 2.0f;
+	private bool visible;
+	public Camera camera;
 
-	/*void OnTriggerEnter(Collider other)
-	{
-		int counter = 0;
-
-		/*counter++;
-		Debug.Log (counter);
-		if (counter == 10) 
-		{
-			Destroy (gameObject);
-		}*/
-
-		/*if (other.tag == "Boundary") 
-		{
-			return;
-		}
-
-		if(other.tag == "Player")
-	    {
-			counter++;
-			Debug.Log (counter);
-			if (counter == 10) 
-			{
-			Destroy (other.gameObject);
-			}
-			//Application.LoadLevel ("title screen");
-		}*/
-	/*	if (other.tag == "Finish")
-		{
-			Debug.Log (counter);
-			counter++;		
-			if (counter == 10) 
-			{
-
-				Destroy (other.gameObject);
-			}
-		}
-	}*/
 
 	void OnTriggerEnter(Collider other)
 	{
-		//if (other.gameObject.name == "Finish") 
-		//{
-			//if(other.gameObject.renderer.isVisible)
-			//{
-				//Debug.Log(other.gameObject.renderer.isVisible);
-				counter += 1;
-				Debug.Log(counter);
-				checkHit ();
-			//}
-		//}
+		if (other.gameObject.tag == "Boundary")
+		{
+			return;				
+		}
+
+		if (other.gameObject.tag == "player" && other.gameObject.tag == "Finish") 
+		{
+			counter += 1;
+			Debug.Log (counter);
+			checkHit ();
+		}
 	}
 
 	void checkHit()
@@ -79,5 +32,40 @@ public class EndLevel : MonoBehaviour {
 			Destroy(gameObject);
 			Application.LoadLevel("title screen");
 		}
+	}
+
+	void Start()
+	{
+		renderer.enabled = false;
+	}
+
+	void Update ()
+	{
+		Vector3 pos = Camera.main.WorldToViewportPoint (camera.transform.position);
+		if (transform.position.x > pos.x)
+		{
+			renderer.enabled = false;
+
+		}
+
+		else if (transform.position.x <= pos.x);
+		{
+			visible = renderer.isVisible;
+			renderer.enabled = true;
+		}
+		
+		if (visible && renderer.enabled == true)
+		{
+			Debug.Log("Found");
+			if(transform.position.y == 9.0f)
+			{
+				rigidbody.velocity = transform.up * -speed;
+			}
+			if(transform.position.y == -9.0f)
+			{
+				rigidbody.velocity = transform.up * speed;
+			}
+		}
+		
 	}
 }

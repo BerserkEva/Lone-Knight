@@ -4,6 +4,7 @@ using System.Collections;
 public class gameController : MonoBehaviour {
 
 	public GameObject Hazard;
+	//public GameObject player;
 	public Vector3 SpawnValues;
 	public int hazardCount;
 
@@ -13,11 +14,13 @@ public class gameController : MonoBehaviour {
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
+	private float playerRespawn = 3.0f;
 
 	public GUIText scoreText;
 	public GUIText restartText;
 	public GUIText gameOverText;
 	public GUIText lifeText;
+	public GUIText pauseText;
 
 	private bool gameOver;
 	private bool stopped;
@@ -51,6 +54,7 @@ public class gameController : MonoBehaviour {
 		pause = false;
 		gameOverText.text = "";
 		restartText.text = "";
+		pauseText.text = "";
 		lives = 3;
 		//timeElapsed = 0;
 		//pos = camera.transform.position.x;
@@ -59,6 +63,7 @@ public class gameController : MonoBehaviour {
 		UpdateScore ();
 		UpdateLife ();
 		StartCoroutine ("SpawnWaves");
+		//StartCoroutine ("SpawnPlayer");
 
 		/*if (stopped == false)
 		{
@@ -66,7 +71,27 @@ public class gameController : MonoBehaviour {
 		}*/
 
 	}
-	
+
+	/*IEnumerator SpawnPlayer()
+	{
+		//Instantiate
+		//Instantiate (player, player.transform.position, player.transform.rotation);
+		//yield return new WaitForSeconds(playerRespawn);
+		while (!gameOver) 
+		{
+			Instantiate (player, player.transform.position, player.transform.rotation);
+			/*if(lives > 0)
+			{
+				//RemoveLife();
+				Instantiate (player, player.transform.position, player.transform.rotation);
+			}
+			yield return new WaitForSeconds(playerRespawn);
+		}
+
+		if (lives == 0)
+			yield break;
+	}*/
+
 	IEnumerator SpawnWaves()
 	{
 		/*if(camera.transform.position.x >= 140)
@@ -139,8 +164,6 @@ public class gameController : MonoBehaviour {
 		gameOver = true;
 	}
 
-
-
 	void Update()
 	{
 		timeElapsed++;
@@ -154,10 +177,12 @@ public class gameController : MonoBehaviour {
 
 		if (!pause)
 		{
+			pauseText.text = "";
 			Time.timeScale = 1.0f;
 		} 
 		else 
 		{
+			pauseText.text = "Paused.  Press p to continue";
 			Time.timeScale = 0.0f;
 		}
 
