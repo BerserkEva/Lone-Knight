@@ -45,20 +45,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 38
-        y: 367
+        y: 355
         width: 522
-        height: 230
+        height: 242
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: sprite.giffin resting no bg_1
       rect:
         serializedVersion: 2
         x: 592
-        y: 366
+        y: 355
         width: 520
-        height: 231
+        height: 242
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: sprite.giffin resting no bg_2
       rect:
         serializedVersion: 2
@@ -67,35 +67,17 @@ TextureImporter:
         width: 525
         height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: sprite.giffin resting no bg_3
       rect:
         serializedVersion: 2
-        x: 527
-        y: 355
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: sprite.giffin resting no bg_4
-      rect:
-        serializedVersion: 2
-        x: 1081
-        y: 355
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: sprite.giffin resting no bg_5
-      rect:
-        serializedVersion: 2
         x: 34
-        y: 90
+        y: 79
         width: 522
-        height: 231
+        height: 242
       alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: sprite.giffin resting no bg_6
+      pivot: {x: .5, y: .5}
+    - name: sprite.giffin resting no bg_4
       rect:
         serializedVersion: 2
         x: 590
@@ -103,15 +85,6 @@ TextureImporter:
         width: 522
         height: 243
       alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: sprite.giffin resting no bg_7
-      rect:
-        serializedVersion: 2
-        x: 527
-        y: 79
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 

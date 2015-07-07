@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour {
 	public float acceleration;
 	public float tilt;
 	public Boundary boundary;
-	
+
+	Animator anim;
 	//private Vector3 currentSpeed;
 	//private float maxSpeed = 12;
 	
@@ -22,7 +23,12 @@ public class PlayerController : MonoBehaviour {
 	public float fireRate;
 	
 	private float nextFire;
-	
+
+	void Start()
+	{
+		anim = GetComponent<Animator>();
+	}
+
 	void Update()
 	{
 		Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
@@ -30,10 +36,16 @@ public class PlayerController : MonoBehaviour {
 		viewPos.y = Mathf.Clamp01(viewPos.y);
 		transform.position = Camera.main.ViewportToWorldPoint(viewPos);
 
-		if (Input.GetButton ("Fire1") && Time.time > nextFire) {
+		if (Input.GetButton ("Fire1") && Time.time > nextFire) 
+		{
+			anim.SetFloat ("speed", 1);
 			nextFire = Time.time + fireRate;
-			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+			Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
 		} 
+		else 
+		{
+			anim.SetFloat("speed", 0);
+		}
 		
 		if (shot.rigidbody.position.x > boundary.xmax) {
 			Destroy (shot);
