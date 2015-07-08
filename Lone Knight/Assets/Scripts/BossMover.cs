@@ -4,36 +4,47 @@ using System.Collections;
 public class BossMover : MonoBehaviour {
 
 	private float speed = 2.0f;
-	private bool visible;
-	public Camera camera;
+	private int counter = 0;
+	public BossMover current;
 
 	void Start()
 	{
-		renderer.enabled = false;
+		current = this;
 	}
 
-
-
-	void Update ()
+	void OnTriggerEnter(Collider other)
 	{
-		if (transform.position.x == camera.transform.position.x);
+		if (other.gameObject.tag == "Boundary")
 		{
-			visible = renderer.isVisible;
-			renderer.enabled = true;
+			return;				
 		}
-
-		if (visible && renderer.enabled == true)
+		
+		if (other.gameObject.tag == "player" && other.gameObject.tag == "Finish") 
 		{
-			Debug.Log("Found");
-			if(transform.position.y == 9.0f)
-			{
-				rigidbody.velocity = transform.up * -speed;
-			}
-			if(transform.position.y == -9.0f)
-			{
-				rigidbody.velocity = transform.up * speed;
-			}
+			counter += 1;
+			Debug.Log (counter);
+			checkHit ();
 		}
+	}
 	
+	void checkHit()
+	{
+		if (counter == 5)
+		{
+			Destroy(gameObject);
+			Application.LoadLevel("title screen");
+		}
+	}
+
+	public void Move ()
+	{
+		if(transform.position.y == 9.0f)
+		{
+			rigidbody.velocity = transform.up * -speed;
+		}
+		if(transform.position.y == -9.0f)
+		{
+			rigidbody.velocity = transform.up * speed;
+		}
 	}
 }

@@ -6,6 +6,7 @@ public class gameController : MonoBehaviour {
 	public GameObject Hazard;
 	//public GameObject player;
 	public Vector3 SpawnValues;
+	public GameObject boss;
 	public int hazardCount;
 
 	private Boundary boundary;
@@ -29,7 +30,7 @@ public class gameController : MonoBehaviour {
 
 	private int score;
 	private int lives;
-	private int timeElapsed;
+	private float timeElapsed;
 	private float pos;
 
 	public Camera camera;
@@ -56,13 +57,15 @@ public class gameController : MonoBehaviour {
 		restartText.text = "";
 		pauseText.text = "";
 		lives = 3;
-		//timeElapsed = 0;
+		timeElapsed = 0;
 		//pos = camera.transform.position.x;
-
+		//boss.SetActive (false);
 
 		UpdateScore ();
 		UpdateLife ();
 		StartCoroutine ("SpawnWaves");
+
+		Invoke ("SpawnBoss", 38.0f);
 		//StartCoroutine ("SpawnPlayer");
 
 		/*if (stopped == false)
@@ -146,6 +149,19 @@ public class gameController : MonoBehaviour {
 		}
 	}
 
+	public void SpawnBoss()
+	{
+		Vector3 viewPos = Camera.main.WorldToViewportPoint (transform.position);
+		viewPos.x = Mathf.Clamp01 (viewPos.x);
+		viewPos.y = Mathf.Clamp01 (viewPos.y);
+		transform.position = Camera.main.ViewportToWorldPoint (viewPos);
+		
+		Vector3 SpawnPosition = new Vector3 ((SpawnValues.x + camera.transform.position.x), 0.0f, 0.0f);
+		Quaternion SpawnRotation = Quaternion.identity;
+		Instantiate (boss, SpawnPosition, SpawnRotation);
+		
+	}
+
 	public void AddScore(int newScoreValue)
 	{
 		score += newScoreValue;
@@ -164,8 +180,24 @@ public class gameController : MonoBehaviour {
 		gameOver = true;
 	}
 
+	void FixedUpdate()
+	{
+		timeElapsed = Time.time;
+
+		if(timeElapsed >= 30.0f)
+			StopCoroutine("SpawnWaves");
+	}
+
+
+	
 	void Update()
 	{
+		
+		if (camera.transform.position.x == 140.0f) 
+		{
+			boss.SetActive(true);
+		}
+
 		timeElapsed++;
 		if (restart)
 		{
@@ -205,6 +237,11 @@ public class gameController : MonoBehaviour {
 		if (camera.transform.position.x >= 140)
 		{
 			StopCoroutine ("SpawnWaves");
+		}
+
+		if (Input.GetKeyDown (KeyCode.Escape))
+		{
+			Application.Quit();
 		}
 
 

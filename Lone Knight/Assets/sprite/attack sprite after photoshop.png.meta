@@ -103,7 +103,7 @@ TextureImporter:
         width: 575
         height: 300
       alignment: 9
-      pivot: {x: .5, y: .589999974}
+      pivot: {x: .5, y: .579999983}
     - name: attack sprite after photoshop_7
       rect:
         serializedVersion: 2
@@ -112,7 +112,7 @@ TextureImporter:
         width: 575
         height: 300
       alignment: 9
-      pivot: {x: .5, y: .589999974}
+      pivot: {x: .5, y: .579999983}
     - name: attack sprite after photoshop_8
       rect:
         serializedVersion: 2
@@ -121,6 +121,6 @@ TextureImporter:
         width: 575
         height: 300
       alignment: 9
-      pivot: {x: .5, y: .540000021}
+      pivot: {x: .5, y: .550000012}
   spritePackingTag: 
   userData: 
